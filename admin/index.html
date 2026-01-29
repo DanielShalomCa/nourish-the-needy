@@ -7,8 +7,85 @@
   </head>
   <body>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      window.CMS_MANUAL_INIT = true;
+    </script>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
     <script>
+      CMS.init({
+        config: {
+          backend: {
+            name: "git-gateway",
+            branch: "main",
+          },
+          media_folder: "uploads",
+          public_folder: "/uploads",
+          collections: [
+            {
+              name: "posts",
+              label: "Blog Posts",
+              files: [
+                {
+                  name: "posts",
+                  label: "Posts",
+                  file: "posts.json",
+                  fields: [
+                    {
+                      label: "Posts",
+                      name: "posts",
+                      widget: "list",
+                      summary: "{{fields.title}}",
+                      fields: [
+                        { label: "Title", name: "title", widget: "string" },
+                        {
+                          label: "Date",
+                          name: "date",
+                          widget: "datetime",
+                          format: "YYYY-MM-DD",
+                        },
+                        {
+                          label: "Summary",
+                          name: "summary",
+                          widget: "text",
+                        },
+                        {
+                          label: "Meals",
+                          name: "meals",
+                          widget: "number",
+                          required: false,
+                        },
+                        {
+                          label: "Receipt Total",
+                          name: "receiptTotal",
+                          widget: "string",
+                          required: false,
+                        },
+                        {
+                          label: "Images",
+                          name: "images",
+                          widget: "list",
+                          required: false,
+                          field: {
+                            label: "Image",
+                            name: "image",
+                            widget: "image",
+                          },
+                        },
+                        {
+                          label: "Video URL",
+                          name: "video",
+                          widget: "string",
+                          required: false,
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      });
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on("login", () => {
           document.location.href = "/admin/";
