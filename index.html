@@ -195,6 +195,20 @@
       <a class="back-to-top" href="#top">Back to top</a>
     </footer>
 
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      if (window.netlifyIdentity) {
+        const hasToken = /invite_token|recovery_token/.test(
+          window.location.hash
+        );
+        if (hasToken) {
+          window.netlifyIdentity.open();
+        }
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/";
+        });
+      }
+    </script>
     <script src="script.js"></script>
   </body>
 </html>
