@@ -77,11 +77,24 @@
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
     <script>
-      CMS.init({ config: window.CMS_CONFIG });
+      let cmsInitialized = false;
+      const startCMS = () => {
+        if (cmsInitialized) return;
+        cmsInitialized = true;
+        CMS.init({ config: window.CMS_CONFIG });
+      };
+
       if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
+        window.netlifyIdentity.on("init", (user) => {
+          if (user) {
+            startCMS();
+          }
         });
+        window.netlifyIdentity.on("login", () => {
+          startCMS();
+        });
+      } else {
+        startCMS();
       }
     </script>
   </body>
