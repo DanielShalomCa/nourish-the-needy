@@ -1,0 +1,31 @@
+{
+  "posts": [
+    {
+      "title": "First cook day",
+      "date": "2026-01-24",
+      "summary": "Served 52 meals at the shelter. Thank you to everyone who donated and shared the link.",
+      "meals": 52,
+      "receiptTotal": "$84.40",
+      "images": [],
+      "video": ""
+    },
+    {
+      "title": "Shopping list and receipts",
+      "date": "2026-01-17",
+      "summary": "Picked up rice, chicken, and vegetables for the next cook day. Kept everything within budget.",
+      "meals": 48,
+      "receiptTotal": "$84.40",
+      "images": [],
+      "video": ""
+    },
+    {
+      "title": "Test run in my kitchen",
+      "date": "2026-01-10",
+      "summary": "Cooked a trial batch, priced ingredients, and planned the weekly menu.",
+      "meals": 40,
+      "receiptTotal": "",
+      "images": [],
+      "video": ""
+    }
+  ]
+}
