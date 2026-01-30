@@ -250,6 +250,13 @@ h1 {
   color: #7a2f53;
 }
 
+.stats {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
 .footer {
   padding: 2.5rem 8vw;
   display: flex;
