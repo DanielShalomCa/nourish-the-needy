@@ -6,7 +6,9 @@
       "summary": "cooked meals and bla bla bla bla bla ",
       "meals": 86,
       "receiptTotal": "$987",
-      "images": []
+      "images": [
+        "/uploads/end-lion.jpg"
+      ]
     }
   ]
 }
