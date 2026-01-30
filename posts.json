@@ -4,11 +4,9 @@
       "title": "First day",
       "date": "2026-02-14",
       "summary": "cooked meals and bla bla bla bla bla ",
-      "meals": 50,
-      "receiptTotal": "$600",
-      "images": [
-        "/uploads/8dc0b46e-45f7-4f8b-8251-9a959713a152.jpg"
-      ]
+      "meals": 86,
+      "receiptTotal": "$987",
+      "images": []
     }
   ]
 }
