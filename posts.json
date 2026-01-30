@@ -3,11 +3,20 @@
     {
       "title": "First day",
       "date": "2026-02-14",
-      "summary": "Cooked meals and ",
+      "summary": "cooked meals and bla bla bla bla bla ",
       "meals": 50,
       "receiptTotal": "$600",
       "images": [
         "/uploads/8dc0b46e-45f7-4f8b-8251-9a959713a152.jpg"
+      ]
+    },
+    {
+      "title": "second day ",
+      "summary": "Helped me and jack with the chem priject bla bbla nuke bla bla ",
+      "meals": 69,
+      "receiptTotal": "420",
+      "images": [
+        "/uploads/end-lion.jpg"
       ]
     }
   ]
