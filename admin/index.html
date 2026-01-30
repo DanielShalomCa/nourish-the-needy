@@ -16,47 +16,44 @@
         color: #2b1b24;
       }
 
-      /* Decap CMS theme overrides */
-      .css-1f5q1ig-TopBarContainer,
-      .css-1s2u09g-ControlContainer,
-      .css-1a2x8u0-ToolbarContainer {
+      /* Decap CMS theme overrides (broad selectors) */
+      [class*="TopBar"],
+      [class*="Toolbar"],
+      [class*="Control"],
+      [class*="Sidebar"],
+      header {
         background: #ffe3f0 !important;
         border-bottom: 1px solid #f1d3e5 !important;
       }
 
-      .css-1f5q1ig-TopBarContainer button,
-      .css-1a2x8u0-ToolbarContainer button {
-        background: #e2559a !important;
-        color: #ffffff !important;
-        border-radius: 999px !important;
-        border: none !important;
-      }
-
-      .css-12xlg9q-CollectionTopContainer,
-      .css-1f3mf5k-CardContainer,
-      .css-1t9i08i-CardContainer {
+      [class*="Card"],
+      [class*="Collection"],
+      [class*="List"] {
         background: #ffffff !important;
         border: 1px solid #f1d3e5 !important;
         box-shadow: 0 18px 30px rgba(178, 93, 140, 0.08) !important;
         border-radius: 16px !important;
       }
 
-      .css-1hvr9yk-ListItem,
-      .css-1q0b2rp-ListItem {
-        border-bottom: 1px solid #f1d3e5 !important;
-      }
-
-      .css-1psg2n2-CollectionHeading,
-      .css-1b2x6q6-StyledPreviewTitle {
-        color: #c23a7d !important;
-      }
-
-      .css-1n4p9ly-Button-default-button-default-Button,
-      .css-1n4p9ly-Button-default-button-default-Button:hover {
+      button,
+      [class*="Button"] {
         background: #e2559a !important;
         color: #ffffff !important;
         border-radius: 999px !important;
         border: none !important;
+      }
+
+      input,
+      textarea,
+      select {
+        border: 1px solid #f1d3e5 !important;
+        border-radius: 12px !important;
+      }
+
+      a,
+      [class*="Heading"],
+      [class*="Title"] {
+        color: #c23a7d !important;
       }
     </style>
   </head>
