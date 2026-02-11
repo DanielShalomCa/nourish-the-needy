@@ -46,10 +46,15 @@ const renderPosts = (posts) => {
   }
 
   posts.forEach((post) => {
-    const button = document.createElement("button");
-    button.className = "btn ghost";
-    button.textContent = `${post.title} (${post.date || "No date"})`;
-    button.addEventListener("click", () => {
+    const row = document.createElement("div");
+    row.style.display = "flex";
+    row.style.flexWrap = "wrap";
+    row.style.gap = "0.5rem";
+
+    const editBtn = document.createElement("button");
+    editBtn.className = "btn ghost";
+    editBtn.textContent = `${post.title} (${post.date || "No date"})`;
+    editBtn.addEventListener("click", () => {
       currentPostId = post.id;
       titleInput.value = post.title || "";
       dateInput.value = post.date || "";
@@ -60,7 +65,27 @@ const renderPosts = (posts) => {
       videoInput.value = post.video || "";
       saveBtn.textContent = "Update post";
     });
-    postList.appendChild(button);
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "btn";
+    deleteBtn.textContent = "Delete";
+    deleteBtn.style.background = "#f5a3c7";
+    deleteBtn.addEventListener("click", async () => {
+      if (!post.id) return;
+      const confirmed = window.confirm(
+        `Delete "${post.title}"? This cannot be undone.`
+      );
+      if (!confirmed) return;
+      await db.collection("posts").doc(post.id).delete();
+      if (currentPostId === post.id) {
+        resetForm();
+      }
+      loadPosts();
+    });
+
+    row.appendChild(editBtn);
+    row.appendChild(deleteBtn);
+    postList.appendChild(row);
   });
 };
 
