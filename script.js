@@ -46,105 +46,153 @@ const parseCurrency = (value) => {
 };
 
 const shouldLoadPosts = postsContainer || totalMealsEl || totalCostEl;
-if (shouldLoadPosts) {
+const hasFirebase =
+  typeof window !== "undefined" &&
+  window.firebase &&
+  window.firebaseConfig;
+
+const normalizeDate = (value) => {
+  if (!value) return value;
+  if (typeof value.toDate === "function") {
+    return value.toDate();
+  }
+  return value;
+};
+
+const renderPosts = (posts) => {
+  const sorted = [...posts].sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+
+  if (totalMealsEl || totalCostEl) {
+    const totalMeals = posts.reduce(
+      (sum, post) => sum + (Number(post.meals) || 0),
+      0
+    );
+    const totalCost = posts.reduce(
+      (sum, post) => sum + parseCurrency(post.receiptTotal),
+      0
+    );
+    if (totalMealsEl) totalMealsEl.textContent = totalMeals.toString();
+    if (totalCostEl) {
+      totalCostEl.textContent = `$${totalCost.toFixed(2)}`;
+    }
+  }
+
+  if (postsContainer) {
+    if (!sorted.length) {
+      postsContainer.innerHTML = "<p>No posts yet.</p>";
+      return;
+    }
+
+    sorted.forEach((post) => {
+      const card = document.createElement("article");
+      card.className = "card";
+
+      const title = document.createElement("h3");
+      title.textContent = post.title;
+
+      const meta = document.createElement("div");
+      meta.className = "post-meta";
+      const date = document.createElement("span");
+      date.textContent = formatDate(post.date);
+      meta.appendChild(date);
+
+      if (post.meals) {
+        const meals = document.createElement("span");
+        meals.textContent = `${post.meals} meals`;
+        meta.appendChild(meals);
+      }
+
+      if (post.receiptTotal) {
+        const receipt = document.createElement("span");
+        receipt.textContent = `Receipts: ${post.receiptTotal}`;
+        meta.appendChild(receipt);
+      }
+
+      const summary = document.createElement("p");
+      summary.textContent = post.summary || "";
+
+      card.appendChild(meta);
+      card.appendChild(title);
+      card.appendChild(summary);
+
+      if (Array.isArray(post.images) && post.images.length) {
+        const media = document.createElement("div");
+        media.className = "post-media";
+        post.images.forEach((src) => {
+          const img = document.createElement("img");
+          img.src = src;
+          img.alt = post.title || "Cook day photo";
+          media.appendChild(img);
+        });
+        card.appendChild(media);
+      }
+
+      if (post.video) {
+        const media = document.createElement("div");
+        media.className = "post-media";
+        if (isVideoFile(post.video)) {
+          const video = document.createElement("video");
+          video.src = post.video;
+          video.controls = true;
+          media.appendChild(video);
+        } else {
+          const link = document.createElement("a");
+          link.href = post.video;
+          link.className = "post-link";
+          link.textContent = "Watch video";
+          media.appendChild(link);
+        }
+        card.appendChild(media);
+      }
+
+      postsContainer.appendChild(card);
+    });
+  }
+};
+
+const loadPostsFromJson = () =>
   fetch("posts.json")
     .then((response) => response.json())
-    .then((data) => {
-      const posts = Array.isArray(data) ? data : data.posts || [];
-      const sorted = [...posts].sort(
-        (a, b) => new Date(b.date) - new Date(a.date)
-      );
+    .then((data) => (Array.isArray(data) ? data : data.posts || []));
 
-      if (totalMealsEl || totalCostEl) {
-        const totalMeals = posts.reduce(
-          (sum, post) => sum + (Number(post.meals) || 0),
-          0
-        );
-        const totalCost = posts.reduce(
-          (sum, post) => sum + parseCurrency(post.receiptTotal),
-          0
-        );
-        if (totalMealsEl) totalMealsEl.textContent = totalMeals.toString();
-        if (totalCostEl) {
-          totalCostEl.textContent = `$${totalCost.toFixed(2)}`;
-        }
+const loadPosts = async () => {
+  if (!shouldLoadPosts) return;
+
+  if (hasFirebase) {
+    try {
+      if (!window.firebase.apps.length) {
+        window.firebase.initializeApp(window.firebaseConfig);
       }
+      const db = window.firebase.firestore();
+      const snapshot = await db
+        .collection("posts")
+        .orderBy("date", "desc")
+        .get();
+      const posts = snapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          ...data,
+          date: normalizeDate(data.date),
+        };
+      });
+      renderPosts(posts);
+      return;
+    } catch (error) {
+      // fallback to local json
+    }
+  }
 
-      if (postsContainer) {
-        if (!sorted.length) {
-          postsContainer.innerHTML = "<p>No posts yet.</p>";
-          return;
-        }
+  try {
+    const posts = await loadPostsFromJson();
+    renderPosts(posts);
+  } catch (error) {
+    if (postsContainer) {
+      postsContainer.innerHTML = "<p>Unable to load posts right now.</p>";
+    }
+  }
+};
 
-        sorted.forEach((post) => {
-          const card = document.createElement("article");
-          card.className = "card";
-
-          const title = document.createElement("h3");
-          title.textContent = post.title;
-
-          const meta = document.createElement("div");
-          meta.className = "post-meta";
-          const date = document.createElement("span");
-          date.textContent = formatDate(post.date);
-          meta.appendChild(date);
-
-          if (post.meals) {
-            const meals = document.createElement("span");
-            meals.textContent = `${post.meals} meals`;
-            meta.appendChild(meals);
-          }
-
-          if (post.receiptTotal) {
-            const receipt = document.createElement("span");
-            receipt.textContent = `Receipts: ${post.receiptTotal}`;
-            meta.appendChild(receipt);
-          }
-
-          const summary = document.createElement("p");
-          summary.textContent = post.summary || "";
-
-          card.appendChild(meta);
-          card.appendChild(title);
-          card.appendChild(summary);
-
-          if (Array.isArray(post.images) && post.images.length) {
-            const media = document.createElement("div");
-            media.className = "post-media";
-            post.images.forEach((src) => {
-              const img = document.createElement("img");
-              img.src = src;
-              img.alt = post.title || "Cook day photo";
-              media.appendChild(img);
-            });
-            card.appendChild(media);
-          }
-
-          if (post.video) {
-            const media = document.createElement("div");
-            media.className = "post-media";
-            if (isVideoFile(post.video)) {
-              const video = document.createElement("video");
-              video.src = post.video;
-              video.controls = true;
-              media.appendChild(video);
-            } else {
-              const link = document.createElement("a");
-              link.href = post.video;
-              link.className = "post-link";
-              link.textContent = "Watch video";
-              media.appendChild(link);
-            }
-            card.appendChild(media);
-          }
-
-          postsContainer.appendChild(card);
-        });
-      }
-    })
-    .catch(() => {
-      if (postsContainer) {
-        postsContainer.innerHTML = "<p>Unable to load posts right now.</p>";
-      }
-    });
-}
+loadPosts();
