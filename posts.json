@@ -3,11 +3,20 @@
     {
       "title": "First day",
       "date": "2026-02-14",
-      "summary": "Cooked meals and ",
-      "meals": 50,
-      "receiptTotal": "$600",
+      "summary": "cooked meals and bla bla bla bla bla ",
+      "meals": 86,
+      "receiptTotal": "$987",
       "images": [
         "/uploads/8dc0b46e-45f7-4f8b-8251-9a959713a152.jpg"
+      ]
+    },
+    {
+      "title": "second day",
+      "summary": "Secind day ",
+      "meals": 765,
+      "receiptTotal": "$999",
+      "images": [
+        "/uploads/end-lion.jpg"
       ]
     }
   ]
