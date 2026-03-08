@@ -120,15 +120,26 @@ if (!window.firebaseConfig || !window.firebase) {
   imageUploadInput.addEventListener("change", async (event) => {
     const files = Array.from(event.target.files || []);
     if (!files.length) return;
+    const user = auth.currentUser;
+    if (!user) {
+      setStatus("Sign in before uploading images.");
+      imageUploadInput.value = "";
+      return;
+    }
 
     for (const file of files) {
       const timestamp = Date.now();
       const safeName = file.name.replace(/\s+/g, "-");
       const path = `posts/${timestamp}-${safeName}`;
       const ref = storage.ref().child(path);
-      await ref.put(file);
-      const url = await ref.getDownloadURL();
-      appendImageUrl(url);
+      try {
+        await ref.put(file);
+        const url = await ref.getDownloadURL();
+        appendImageUrl(url);
+      } catch (error) {
+        setStatus("Upload failed. Check Storage rules.");
+        break;
+      }
     }
 
     imageUploadInput.value = "";
