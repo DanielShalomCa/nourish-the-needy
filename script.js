@@ -59,6 +59,8 @@ const normalizeDate = (value) => {
   return value;
 };
 
+const isHttpUrl = (value) => /^https?:\/\//i.test(value || "");
+
 const renderPosts = (posts) => {
   const sorted = [...posts].sort(
     (a, b) => new Date(b.date) - new Date(a.date)
@@ -89,6 +91,21 @@ const renderPosts = (posts) => {
       const card = document.createElement("article");
       card.className = "card";
 
+      const imageUrls = Array.isArray(post.images)
+        ? post.images.filter((src) => isHttpUrl(src))
+        : [];
+
+      if (imageUrls.length) {
+        const cover = document.createElement("div");
+        cover.className = "post-cover";
+        const img = document.createElement("img");
+        img.src = imageUrls[0];
+        img.alt = post.title || "Cook day photo";
+        img.onerror = () => cover.remove();
+        cover.appendChild(img);
+        card.appendChild(cover);
+      }
+
       const title = document.createElement("h3");
       title.textContent = post.title;
 
@@ -117,13 +134,14 @@ const renderPosts = (posts) => {
       card.appendChild(title);
       card.appendChild(summary);
 
-      if (Array.isArray(post.images) && post.images.length) {
+      if (imageUrls.length) {
         const media = document.createElement("div");
         media.className = "post-media";
-        post.images.forEach((src) => {
+        imageUrls.forEach((src) => {
           const img = document.createElement("img");
           img.src = src;
           img.alt = post.title || "Cook day photo";
+          img.onerror = () => img.remove();
           media.appendChild(img);
         });
         card.appendChild(media);

@@ -147,6 +147,11 @@
               <textarea id="images" name="images"></textarea>
             </div>
             <div class="field">
+              <label for="imageUpload">Upload images (adds URLs)</label>
+              <input id="imageUpload" name="imageUpload" type="file" multiple accept="image/*" />
+              <p class="note" style="margin-top:0.35rem;">Uploads go to Firebase Storage and auto-fill the URLs above.</p>
+            </div>
+            <div class="field">
               <label for="video">Video URL</label>
               <input id="video" name="video" />
             </div>
@@ -172,6 +177,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-storage-compat.js"></script>
     <script src="admin.js"></script>
   </body>
 </html>

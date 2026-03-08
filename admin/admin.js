@@ -13,6 +13,7 @@ const mealsInput = document.getElementById("meals");
 const receiptInput = document.getElementById("receiptTotal");
 const imagesInput = document.getElementById("images");
 const videoInput = document.getElementById("video");
+const imageUploadInput = document.getElementById("imageUpload");
 
 let currentPostId = null;
 
@@ -98,6 +99,7 @@ if (!window.firebaseConfig || !window.firebase) {
 
   const auth = window.firebase.auth();
   const db = window.firebase.firestore();
+  const storage = window.firebase.storage();
   const provider = new window.firebase.auth.GoogleAuthProvider();
 
   loginBtn.addEventListener("click", () => {
@@ -109,6 +111,28 @@ if (!window.firebaseConfig || !window.firebase) {
   });
 
   resetBtn.addEventListener("click", resetForm);
+
+  const appendImageUrl = (url) => {
+    const existing = imagesInput.value.trim();
+    imagesInput.value = existing ? `${existing}\n${url}` : url;
+  };
+
+  imageUploadInput.addEventListener("change", async (event) => {
+    const files = Array.from(event.target.files || []);
+    if (!files.length) return;
+
+    for (const file of files) {
+      const timestamp = Date.now();
+      const safeName = file.name.replace(/\s+/g, "-");
+      const path = `posts/${timestamp}-${safeName}`;
+      const ref = storage.ref().child(path);
+      await ref.put(file);
+      const url = await ref.getDownloadURL();
+      appendImageUrl(url);
+    }
+
+    imageUploadInput.value = "";
+  });
 
   auth.onAuthStateChanged((user) => {
     if (user) {
