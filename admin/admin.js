@@ -39,7 +39,7 @@ const parseImages = () =>
     .map((line) => line.trim())
     .filter(Boolean);
 
-const renderPosts = (posts) => {
+  const renderPosts = (posts) => {
   postList.innerHTML = "";
   if (!posts.length) {
     postList.innerHTML = "<p class=\"admin-status\">No posts yet.</p>";
@@ -73,15 +73,25 @@ const renderPosts = (posts) => {
     deleteBtn.style.background = "#f5a3c7";
     deleteBtn.addEventListener("click", async () => {
       if (!post.id) return;
+      const user = auth.currentUser;
+      if (!user) {
+        setStatus("Sign in before deleting posts.");
+        return;
+      }
       const confirmed = window.confirm(
         `Delete "${post.title}"? This cannot be undone.`
       );
       if (!confirmed) return;
-      await db.collection("posts").doc(post.id).delete();
-      if (currentPostId === post.id) {
-        resetForm();
+      try {
+        await db.collection("posts").doc(post.id).delete();
+        if (currentPostId === post.id) {
+          resetForm();
+        }
+        loadPosts();
+        setStatus(`Deleted "${post.title}".`);
+      } catch (error) {
+        setStatus("Delete failed. Check Firestore rules.");
       }
-      loadPosts();
     });
 
     row.appendChild(editBtn);

@@ -6,7 +6,7 @@
     <title>Nourish the Needy</title>
     <meta
       name="description"
-      content="Monthly and weekly meals for local shelters. Donate to help fund ingredients and supplies."
+      content="Monthly meals for local shelters. Donate to help fund ingredients and supplies."
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -18,24 +18,33 @@
           <a href="#mission">Mission</a>
           <a href="#donate">Donate</a>
           <a href="#updates">Updates</a>
+          <a href="about.html">About</a>
           <a href="blog.html">Blog</a>
           <a href="#contact">Contact</a>
         </div>
       </nav>
 
-      <div class="hero-content">
-        <p class="tag">Community meals for local shelters</p>
-        <h1>Turning donations into fresh meals.</h1>
-        <p class="lead">
-          I visit the shelter once a week or once a month to cook and serve. Every
-          dollar goes toward ingredients and supplies, and I share updates so you
-          can see the impact.
-        </p>
-        <div class="cta">
-          <a class="btn primary" href="#donate">Donate now</a>
-          <a class="btn ghost" href="#updates">See updates</a>
+      <div class="hero-grid">
+        <div class="hero-content">
+          <p class="tag">Community meals for local shelters</p>
+          <h1>Turning donations into fresh meals.</h1>
+          <p class="lead">
+            I visit the shelter once a month to cook and serve. Every dollar goes
+            toward ingredients and supplies, and I share updates so you can see
+            the impact.
+          </p>
+          <div class="cta">
+            <a class="btn primary" href="#donate">Donate now</a>
+            <a class="btn ghost" href="#updates">See updates</a>
+          </div>
+          <p class="note">Transparent, hands-on, and local.</p>
         </div>
-        <p class="note">Transparent, hands-on, and local.</p>
+        <div class="hero-image">
+          <img
+            src="assets/hero.png"
+            alt="Volunteers preparing meals in a kitchen"
+          />
+        </div>
       </div>
     </header>
 
@@ -62,8 +71,8 @@
             <div class="card">
               <h3>How often we cook</h3>
               <ul>
-                <li>Weekly or monthly cook days</li>
-                <li>Target: 40 to 80 meals per visit</li>
+                <li>Monthly cook days</li>
+                <li>Target: 100 to 200 meals per visit</li>
                 <li>Photos and receipts after each visit</li>
               </ul>
             </div>
@@ -75,41 +84,23 @@
         <div class="section-inner">
           <h2>Donate</h2>
           <p>
-            Choose a donation option below. Replace the links with your real
-            payment pages (PayPal, Cash App, Venmo, GoFundMe, Stripe, or another
-            provider).
+            Donations are accepted via e-transfer. Every dollar goes toward
+            ingredients and supplies for monthly cook days.
           </p>
 
-          <div class="grid three">
+          <div class="grid two">
             <div class="card">
-              <h3>One-time gift</h3>
-              <p>Help cover ingredients for the next cook day.</p>
-              <a class="btn primary" href="https://example.com/donate">
-                Donate once
-              </a>
-            </div>
-            <div class="card">
-              <h3>Monthly supporter</h3>
-              <p>Fuel steady meals with a monthly donation.</p>
-              <a class="btn primary" href="https://example.com/monthly">
-                Give monthly
-              </a>
+              <h3>E-transfer</h3>
+              <p>Send donations to:</p>
+              <p class="donation-email">
+                <strong>raelinfudge@gmail.com</strong>
+              </p>
+              <p>Thank you for supporting Nourish the Needy.</p>
             </div>
             <div class="card">
               <h3>Share the mission</h3>
               <p>Copy the link and post it to your story.</p>
               <button class="btn ghost" id="copy-link">Copy site link</button>
-            </div>
-          </div>
-
-          <div class="card payment-embed" id="payment-button">
-            <h3>Payment button</h3>
-            <p>
-              Add your real donation button or embed from PayPal, Stripe, or
-              another provider here.
-            </p>
-            <div class="embed-box">
-              Your payment button embed will appear here.
             </div>
           </div>
 
@@ -137,37 +128,10 @@
         <div class="section-inner">
           <h2>Updates and cook day blog</h2>
           <p>
-            I post photos, receipts, and a quick recap after each visit. Follow
-            along so you can see how your donations are used.
+            I post photos, receipts, and a quick recap after each monthly cook
+            day. Follow along so you can see how your donations are used.
           </p>
           <a class="btn ghost" href="blog.html">Read the full blog</a>
-
-          <div class="grid three">
-            <article class="card">
-              <p class="eyebrow">Jan 10, 2026</p>
-              <h3>Test run in my kitchen</h3>
-              <p>
-                Cooked a trial batch, priced ingredients, and planned the
-                weekly menu. Next step: first shelter visit.
-              </p>
-            </article>
-            <article class="card">
-              <p class="eyebrow">Jan 17, 2026</p>
-              <h3>Shopping list and receipts</h3>
-              <p>
-                Picked up rice, chicken, and vegetables. Total: $84.40 for 48
-                meals.
-              </p>
-            </article>
-            <article class="card">
-              <p class="eyebrow">Jan 24, 2026</p>
-              <h3>First cook day</h3>
-              <p>
-                Served 52 meals at the shelter. Thank you to everyone who
-                donated and shared the link.
-              </p>
-            </article>
-          </div>
         </div>
       </section>
 
@@ -182,16 +146,16 @@
             <div class="card">
               <h3>Email</h3>
               <p>
-                <a href="mailto:hello@nourishtheneedy.org">
-                  hello@nourishtheneedy.org
+                <a href="mailto:raelinfudge@gmail.com">
+                  raelinfudge@gmail.com
                 </a>
               </p>
             </div>
             <div class="card">
               <h3>Instagram</h3>
               <p>
-                <a href="https://instagram.com/yourhandle">
-                  instagram.com/yourhandle
+                <a href="https://instagram.com/nourishtheneedy2026">
+                  instagram.com/nourishtheneedy2026
                 </a>
               </p>
             </div>
@@ -211,20 +175,6 @@
     <script src="firebase-config.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script>
-      if (window.netlifyIdentity) {
-        const hasToken = /invite_token|recovery_token/.test(
-          window.location.hash
-        );
-        if (hasToken) {
-          window.netlifyIdentity.open();
-        }
-        window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
-        });
-      }
-    </script>
     <script src="script.js"></script>
   </body>
 </html>
